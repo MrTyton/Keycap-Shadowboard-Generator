@@ -7,43 +7,60 @@ interface Props {
 }
 
 export function BoardControls({ config, onChange }: Props) {
-    function set(field: keyof BoardConfig, value: number) {
-        onChange({ ...config, [field]: value });
-    }
-
     const cols = boardCols(config);
     const rows = boardRows(config);
-    const effectiveWidth = cols * config.cellSize;
-    const effectiveHeight = rows * config.cellSize;
-    const widthMismatch = effectiveWidth !== config.boardWidth;
-    const heightMismatch = effectiveHeight !== config.boardHeight;
+
+    function setCols(newCols: number) {
+        onChange({ ...config, boardWidth: newCols * config.cellSize });
+    }
+    function setRows(newRows: number) {
+        onChange({ ...config, boardHeight: newRows * config.cellSize });
+    }
+    function setCellSize(newCellSize: number) {
+        // Keep column/row count the same; derived mm dimensions update automatically.
+        onChange({
+            ...config,
+            cellSize: newCellSize,
+            boardWidth: cols * newCellSize,
+            boardHeight: rows * newCellSize,
+        });
+    }
+    function setThickness(value: number) {
+        onChange({ ...config, thickness: value });
+    }
 
     return (
         <div className="board-controls">
             <p className="section-heading">Board Settings</p>
 
             <label className="control-label">
-                Width (mm)
-                <input
-                    type="number"
-                    className="control-input"
-                    min={14}
-                    max={2000}
-                    value={config.boardWidth}
-                    onChange={e => set('boardWidth', Number(e.target.value))}
-                />
+                Columns
+                <span className="control-row">
+                    <input
+                        type="number"
+                        className="control-input"
+                        min={1}
+                        max={200}
+                        value={cols}
+                        onChange={e => setCols(Math.max(1, Math.round(Number(e.target.value))))}
+                    />
+                    <span className="control-derived">= {config.boardWidth}&thinsp;mm</span>
+                </span>
             </label>
 
             <label className="control-label">
-                Height (mm)
-                <input
-                    type="number"
-                    className="control-input"
-                    min={14}
-                    max={2000}
-                    value={config.boardHeight}
-                    onChange={e => set('boardHeight', Number(e.target.value))}
-                />
+                Rows
+                <span className="control-row">
+                    <input
+                        type="number"
+                        className="control-input"
+                        min={1}
+                        max={200}
+                        value={rows}
+                        onChange={e => setRows(Math.max(1, Math.round(Number(e.target.value))))}
+                    />
+                    <span className="control-derived">= {config.boardHeight}&thinsp;mm</span>
+                </span>
             </label>
 
             <label className="control-label">
@@ -55,7 +72,7 @@ export function BoardControls({ config, onChange }: Props) {
                     max={50}
                     step={0.5}
                     value={config.thickness}
-                    onChange={e => set('thickness', Number(e.target.value))}
+                    onChange={e => setThickness(Number(e.target.value))}
                 />
             </label>
 
@@ -68,16 +85,9 @@ export function BoardControls({ config, onChange }: Props) {
                     max={100}
                     step={0.5}
                     value={config.cellSize}
-                    onChange={e => set('cellSize', Number(e.target.value))}
+                    onChange={e => setCellSize(Number(e.target.value))}
                 />
             </label>
-
-            {(widthMismatch || heightMismatch) && (
-                <p className="warning-box">
-                    Grid snapped to {effectiveWidth}&times;{effectiveHeight}&nbsp;mm
-                    ({cols}&times;{rows} cells)
-                </p>
-            )}
         </div>
     );
 }

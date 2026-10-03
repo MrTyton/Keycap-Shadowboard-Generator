@@ -87,6 +87,24 @@
     border-color: var(--accent);
 }
 
+.control-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-row .control-input {
+    width: auto;
+    flex: 1;
+}
+
+.control-derived {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    opacity: 0.7;
+}
+
 .warning-box {
     font-size: 0.72rem;
     color: var(--warning);
