@@ -1,17 +1,17 @@
 export type ClickMode = 'normal' | 'half' | 'spacebar';
 
 export interface BoardConfig {
-  boardWidth: number;   // mm
-  boardHeight: number;  // mm
-  thickness: number;    // mm
-  cellSize: number;     // mm
+    boardWidth: number;   // mm
+    boardHeight: number;  // mm
+    thickness: number;    // mm
+    cellSize: number;     // mm
 }
 
 export const DEFAULT_CONFIG: BoardConfig = {
-  boardWidth: 308,
-  boardHeight: 308,
-  thickness: 4,
-  cellSize: 14,
+    boardWidth: 308,
+    boardHeight: 308,
+    thickness: 4,
+    cellSize: 14,
 };
 
 /**
@@ -19,7 +19,7 @@ export const DEFAULT_CONFIG: BoardConfig = {
  * The hole is centred in the cell square.
  */
 export function normalCellKey(r: number, c: number): string {
-  return `n:${r},${c}`;
+    return `n:${r},${c}`;
 }
 
 /**
@@ -28,7 +28,7 @@ export function normalCellKey(r: number, c: number): string {
  * Valid: i ∈ [1, rows-1], j ∈ [1, cols-1].
  */
 export function halfCornerKey(i: number, j: number): string {
-  return `hc:${i},${j}`;
+    return `hc:${i},${j}`;
 }
 
 /** centred on vertical grid line j, spanning row r.
@@ -36,7 +36,7 @@ export function halfCornerKey(i: number, j: number): string {
  * Valid: j ∈ [1, cols-1], r ∈ [0, rows-1].
  */
 export function halfLRKey(r: number, j: number): string {
-  return `hlr:${r},${j}`;
+    return `hlr:${r},${j}`;
 }
 
 /**
@@ -45,20 +45,20 @@ export function halfLRKey(r: number, j: number): string {
  * Valid: i ∈ [1, rows-1], c ∈ [0, cols-1].
  */
 export function halfTBKey(i: number, c: number): string {
-  return `htb:${i},${c}`;
+    return `htb:${i},${c}`;
 }
 
 /** Parse any hole key back to its prefix, and two numeric coordinates. */
 export function parseAnyKey(key: string): { prefix: string; a: number; b: number } {
-  const colon = key.indexOf(':');
-  const parts = key.slice(colon + 1).split(',');
-  return { prefix: key.slice(0, colon), a: Number(parts[0]), b: Number(parts[1]) };
+    const colon = key.indexOf(':');
+    const parts = key.slice(colon + 1).split(',');
+    return { prefix: key.slice(0, colon), a: Number(parts[0]), b: Number(parts[1]) };
 }
 
 export function boardCols(config: BoardConfig): number {
-  return Math.floor(config.boardWidth / config.cellSize);
+    return Math.floor(config.boardWidth / config.cellSize);
 }
 
 export function boardRows(config: BoardConfig): number {
-  return Math.floor(config.boardHeight / config.cellSize);
+    return Math.floor(config.boardHeight / config.cellSize);
 }
