@@ -4,6 +4,7 @@ import { DEFAULT_CONFIG, boardCols, boardRows } from './types/board';
 import { BoardControls } from './components/BoardControls';
 import { ModeSelector } from './components/ModeSelector';
 import { Grid } from './components/Grid';
+import { exportStl } from './lib/exportStl';
 import './App.css';
 
 function App() {
@@ -39,8 +40,8 @@ function App() {
     }, []);
 
     const handleExportSTL = useCallback(() => {
-        alert('STL export coming soon!');
-    }, []);
+        exportStl(config, enabledCells);
+    }, [config, enabledCells]);
 
     return (
         <div className="app">
