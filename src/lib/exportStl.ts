@@ -100,8 +100,8 @@ export function exportStl(config: BoardConfig, enabledCells: ReadonlySet<string>
     const xSet = new Set<number>([0, W]);
     const ySet = new Set<number>([0, H]);
     for (const h of holes) {
-        xSet.add(h.x);     xSet.add(h.x + h.w);
-        ySet.add(h.y);     ySet.add(h.y + h.h);
+        xSet.add(h.x); xSet.add(h.x + h.w);
+        ySet.add(h.y); ySet.add(h.y + h.h);
     }
     const xs = [...xSet].sort((a, b) => a - b);
     const ys = [...ySet].sort((a, b) => a - b);
