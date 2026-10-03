@@ -46,7 +46,7 @@ function App() {
     return (
         <div className="app">
             <header className="app-header">
-                <h1>Keycap Shadowbox Generator</h1>
+                <h1>Keycap Shadowboard Generator</h1>
             </header>
 
             <main className="app-main">
